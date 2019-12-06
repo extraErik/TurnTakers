@@ -1,0 +1,13 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>takers</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-virtual-scroll [items]="items" approxItemHeight="320px">
+    <ion-item *virtualItem="let item" [routerLink]="['/takers/detail', item.id]" detail>
+      <ion-label>{{item.id}} : {{item.name}}</ion-label>
+    </ion-item>
+  </ion-virtual-scroll>
+</ion-content>

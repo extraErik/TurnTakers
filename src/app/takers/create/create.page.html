@@ -1,0 +1,59 @@
+<ion-header>
+    <ion-toolbar>
+      <ion-buttons slot="start">
+        <ion-back-button defaultHref="/takers"></ion-back-button>
+      </ion-buttons>
+      <ion-title>Create New TurnTaker</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+<ion-content>
+    <form [formGroup]="form"> 
+        <ion-grid>
+          <ion-row>
+            <ion-col size-sm="6" offset-sm="3">
+              <ion-item>
+                <ion-label position="floating">Name</ion-label>
+                <ion-input type="text" autocomplete autocorrect formControlName="name"></ion-input>
+              </ion-item>
+            </ion-col>
+          </ion-row>
+          <ion-row *ngIf="!form.get('name').valid && form.get('name').touched">
+              <ion-col size-sm="6" offset-sm="3">
+                  <p>Name must be between 1 and 30 characters</p>
+              </ion-col>
+          </ion-row>
+          <ion-row>
+              <ion-col size-sm="6" offset-sm="3">
+                  <ion-item>
+                    <ion-label position="floating">Description</ion-label>
+                    <ion-textarea rows="3" formControlName="description"></ion-textarea>
+                  </ion-item>
+                </ion-col>
+          </ion-row>
+          <ion-row *ngIf="!form.get('description').valid && form.get('description').touched">
+              <ion-col size-sm="6" offset-sm="3">
+                  <p>Description must be between 1 and 300 characters</p>
+              </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col>
+                <ion-col size-sm="6" offset-sm="3">
+                    <p>
+                      TO DO: add ability to select participants. (Via list with checkboxes?
+                      And maybe a "new participant" button that pulls up a modal to create one?)
+                    </p>
+                </ion-col>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col size-sm="6" offset-sm="3">
+              <ion-button type="button" color="primary" fill="clear" expand="block" [routerLink]="['/takers']" routerDirection="back">Cancel</ion-button>
+              <ion-button type="submit" color="primary" (click)="onCreate()" expand="block" [disabled]="form.invalid">
+                Create
+              </ion-button>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </form>
+</ion-content>

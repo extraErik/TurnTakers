@@ -14,6 +14,8 @@
     </ion-item>
   </ion-virtual-scroll>
 
-  <ion-button color="primary">New TurnTaker</ion-button>
-
+  <div padding>
+    <ion-button color="primary" [routerLink]="['/takers/create']" expand="block">New TurnTaker</ion-button>
+  </div>
+  
 </ion-content>

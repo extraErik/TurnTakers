@@ -24,4 +24,9 @@ export class MyTurnTakersService {
       return taker.id === takerId;
     })[0];
   }
+
+  addTurnTaker(taker: TurnTaker) {
+    this.myTurnTakers.push(taker);
+    console.log('in service, num turntakers is now ' + this.myTurnTakers.length);
+  }
 }

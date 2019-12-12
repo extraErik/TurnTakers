@@ -6,7 +6,7 @@ export class TurnTaker {
       public id: string,
       public name: string,
       public description: string,
-      public participants: Array<Participant> = [],
+      public participants: string[] = [],
       public turnsTaken: Array<Turn> = []
     ) {}
   }

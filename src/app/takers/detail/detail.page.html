@@ -8,15 +8,18 @@
 </ion-header>
 
 <ion-content>
-  <p>This is the 'taker' with a id of {{ turnTaker.id }}</p>
 
-  <ion-slides pager="true" [options]="slideOpts">
+  <div padding>
+    <p>{{ turnTaker.description }}</p>
+    <p>Participants: {{ participantNames }}</p>
+  </div>
 
+  <ion-slides *ngIf="turnTaker.turnsTaken && turnTaker.turnsTaken.length > 0" pager="true" [options]="slideOpts">
       <ion-slide *ngFor="let turn of turnTaker.turnsTaken">
           <ion-card>
               <ion-card-header>
                 <ion-card-subtitle>Turn {{ turn.index }} of {{ numTurnsTaken }}</ion-card-subtitle>
-                <ion-card-title>Participant: {{ turn.participantId }}</ion-card-title>
+                <ion-card-title>Participant: {{ getParticipantName(turn.participantId) }}</ion-card-title>
               </ion-card-header>
               <ion-card-content>
                 Some other stuff might go here. Date/time if previous turn? avatar of participant? What else?
@@ -24,10 +27,15 @@
             </ion-card>
       </ion-slide>
   </ion-slides>
+  <div *ngIf="!turnTaker.turnsTaken || turnTaker.turnsTaken.length <= 0" padding>
+    No turns taken!
+  </div>
 
   <!-- TODO: Look at this for adding nav buttons: https://forum.ionicframework.com/t/navigation-arrows-on-slider/119081 -->
   <!-- TODO: And maybe this: https://www.freakyjolly.com/ionic-4-multiple-slides-on-single-view-using-swiper-slider/ -->
 
-  <h3>ion virtual scroll will go here, showing full turn history</h3>
-
+  <div padding>
+    <p>ion virtual scroll will go here, showing full turn history</p>
+  </div>
+  
 </ion-content>

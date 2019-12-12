@@ -3,6 +3,7 @@ import { NavController } from '@ionic/angular';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MyTurnTakersService } from 'src/app/services/my-turn-takers.service';
 import { TurnTaker } from '../turnTaker.model';
+import { ParticipantsService } from 'src/app/services/participants.service';
 
 @Component({
   selector: 'app-detail',
@@ -12,6 +13,7 @@ import { TurnTaker } from '../turnTaker.model';
 export class DetailPage implements OnInit {
 
   turnTaker: TurnTaker;
+  participantNames: string[];
   numTurnsTaken = 0;
 
   slideOpts = {
@@ -23,7 +25,8 @@ export class DetailPage implements OnInit {
     private navCtrl: NavController,
     private route: ActivatedRoute,
     private router: Router,
-    private myTurnTakers: MyTurnTakersService
+    private myTurnTakers: MyTurnTakersService,
+    private participantsService: ParticipantsService
   ) { }
 
   ngOnInit() {
@@ -33,12 +36,16 @@ export class DetailPage implements OnInit {
         return;
       }
       const takerId = paramMap.get('id');
-
       this.turnTaker = this.myTurnTakers.getMyTurnTaker(takerId);
+      this.participantNames = this.participantsService.getParticipantNames(this.turnTaker.participants);
       this.numTurnsTaken = this.turnTaker.turnsTaken.length;
       this.slideOpts.initialSlide = this.numTurnsTaken - 1;
  
     });
+  }
+
+  getParticipantName(participantId) {
+    return this.participantsService.getParticipantName(participantId);
   }
 
 }

@@ -14,22 +14,16 @@
     <p>Participants: {{ participantNames }}</p>
   </div>
 
-  <!-- <div class="ion-padding-start">
-    Previously: {{ getLastTurnParticipant().name }}
-  </div> -->
   <ion-card>
       <ion-card-header>
         <ion-card-title>Next: {{ getNextTurnParticipant().name }}</ion-card-title>
         <ion-card-subtitle>Turn {{ turnTaker.turnsTaken.length + 1 }}</ion-card-subtitle>
       </ion-card-header>
       <ion-card-content>
-        <ion-button color="primary">Take Turn</ion-button>
-        <ion-button color="primary" fill="clear">Skip Turn</ion-button>
+        <ion-button color="primary" (click)="onTakeTurn()">Take Turn</ion-button>
+        <ion-button color="primary" fill="clear" (click)="onSkipTurn()">Skip Turn</ion-button>
       </ion-card-content>
   </ion-card>
-  <!-- <div class="ion-padding-start">
-    After this: {{ getTurnAfterNextTurnParticipant().name }}
-  </div> -->
 
   <!-- <div class="ion-padding-start">
     <p class="ion-float-left">Previously: {{ getLastTurnParticipant().name }}</p>

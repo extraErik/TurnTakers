@@ -29,4 +29,11 @@ export class MyTurnTakersService {
     this.myTurnTakers.push(taker);
     console.log('in service, num turntakers is now ' + this.myTurnTakers.length);
   }
+
+  updateTurnTaker(taker: TurnTaker) {
+    const index = this.myTurnTakers.findIndex(item => item.id === taker.id);
+    if (index !== -1) {
+      this.myTurnTakers[index] = taker;
+    }
+  }
 }

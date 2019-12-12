@@ -79,4 +79,18 @@ export class DetailPage implements OnInit {
 
     return this.availableParticipants.find(participant => participant.id === nextNextParticipantId);
   }
+
+  onTakeTurn() {
+    const newTurn = new Turn(new Date(), this.getNextTurnParticipant().id, null);
+
+    this.turnTaker.turnsTaken.push(newTurn);
+    this.turnTaker.turnsTaken = [...this.turnTaker.turnsTaken]; // to force change detection
+
+    this.myTurnTakers.updateTurnTaker(this.turnTaker);
+    console.log(this.turnTaker);
+  }
+
+  onSkipTurn() {
+    alert('TODO: skip turn');
+  }
 }

@@ -14,28 +14,56 @@
     <p>Participants: {{ participantNames }}</p>
   </div>
 
-  <ion-slides *ngIf="turnTaker.turnsTaken && turnTaker.turnsTaken.length > 0" pager="true" [options]="slideOpts">
-      <ion-slide *ngFor="let turn of turnTaker.turnsTaken">
-          <ion-card>
-              <ion-card-header>
-                <ion-card-subtitle>Turn {{ turn.index }} of {{ numTurnsTaken }}</ion-card-subtitle>
-                <ion-card-title>Participant: {{ getParticipantName(turn.participantId) }}</ion-card-title>
-              </ion-card-header>
-              <ion-card-content>
-                Some other stuff might go here. Date/time if previous turn? avatar of participant? What else?
-              </ion-card-content>
-            </ion-card>
-      </ion-slide>
-  </ion-slides>
-  <div *ngIf="!turnTaker.turnsTaken || turnTaker.turnsTaken.length <= 0" padding>
-    No turns taken!
-  </div>
+  <!-- <div class="ion-padding-start">
+    Previously: {{ getLastTurnParticipant().name }}
+  </div> -->
+  <ion-card>
+      <ion-card-header>
+        <ion-card-title>Next: {{ getNextTurnParticipant().name }}</ion-card-title>
+        <ion-card-subtitle>Turn {{ turnTaker.turnsTaken.length + 1 }}</ion-card-subtitle>
+      </ion-card-header>
+      <ion-card-content>
+        <ion-button color="primary">Take Turn</ion-button>
+        <ion-button color="primary" fill="clear">Skip Turn</ion-button>
+      </ion-card-content>
+  </ion-card>
+  <!-- <div class="ion-padding-start">
+    After this: {{ getTurnAfterNextTurnParticipant().name }}
+  </div> -->
 
-  <!-- TODO: Look at this for adding nav buttons: https://forum.ionicframework.com/t/navigation-arrows-on-slider/119081 -->
-  <!-- TODO: And maybe this: https://www.freakyjolly.com/ionic-4-multiple-slides-on-single-view-using-swiper-slider/ -->
+  <!-- <div class="ion-padding-start">
+    <p class="ion-float-left">Previously: {{ getLastTurnParticipant().name }}</p>
+    <p class="ion-float-right">After this: {{ getTurnAfterNextTurnParticipant().name }}</p>
+  </div> -->
 
-  <div padding>
-    <p>ion virtual scroll will go here, showing full turn history</p>
-  </div>
+  <ion-grid>
+    <ion-row>
+      <ion-col class="ion-float-start ion-text-start">
+        Previously: {{ getLastTurnParticipant().name }}
+      </ion-col>
+      <ion-col class="ion-float-end ion-text-end">
+        After this: {{ getTurnAfterNextTurnParticipant().name }}
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <!-- If for some reason you end up using slider after all: -->
+  <!-- Look at this for adding nav buttons: https://forum.ionicframework.com/t/navigation-arrows-on-slider/119081 -->
+  <!-- And maybe this: https://www.freakyjolly.com/ionic-4-multiple-slides-on-single-view-using-swiper-slider/ -->
+
+  <h3 class="ion-padding-top ion-padding-start">Turn history</h3>
+  <ion-virtual-scroll [items]="turnTaker.turnsTaken" approxItemHeight="70px">
+    <ion-item *virtualItem="let turn; let i = index">
+      <!-- <ion-thumbnail slot="start">
+        <ion-img [src]=""></ion-img>
+      </ion-thumbnail> -->
+      <ion-label>
+        <p>Turn {{ turnTaker.turnsTaken.length - i}}: {{ getParticipantName(turn.participantId) }}</p>
+        <p>{{ turn.dateTime | date:'short' }}</p>
+        <p>{{ turn.note}}</p>
+      </ion-label>
+    </ion-item>
+  </ion-virtual-scroll>
+
   
 </ion-content>

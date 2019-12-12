@@ -39,24 +39,13 @@
           <ion-row>
             <ion-col>
                 <ion-col size-sm="6" offset-sm="3">
+                  <p>Select participants for this TurnTaker:</p>
+                  <p>TODO: make order of selection relevant, i.e. make that be the order of turns. Editable later.</p>
                   <ion-list>
-
-                    <!-- <ion-item *ngFor="let participant of availableParticipants">
-                      <ion-label>{{participant.name}}</ion-label>
-                      <ion-checkbox slot="end" [(ngModel)]="entry.isChecked"></ion-checkbox>
-                    </ion-item> -->
-
                     <ion-item formArrayName="participants"  *ngFor="let participant of form.controls.participants.controls; let i = index">
                       <ion-label>{{availableParticipants[i].name}}</ion-label>
                       <ion-checkbox slot="end" [formControlName]="i"></ion-checkbox>
                     </ion-item>
-
-
-                    <!-- <label formArrayName="orders" *ngFor="let order of form.controls.orders.controls; let i = index">
-                      <input type="checkbox" [formControlName]="i">
-                      {{ordersData[i].name}}
-                    </label> -->
-
                   </ion-list>
                 </ion-col>
             </ion-col>

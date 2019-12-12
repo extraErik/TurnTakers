@@ -38,23 +38,11 @@ export class CreatePage implements OnInit {
   }
 
   ngOnInit() {
-    // this.form = new FormGroup({
-    //   name: new FormControl(null, {
-    //     updateOn: 'blur',
-    //     validators: [Validators.required, Validators.maxLength(30)]
-    //   }),
-    //   description: new FormControl(null, {
-    //     updateOn: 'blur',
-    //     validators: [Validators.maxLength(300)]
-    //   }),
-    //   participants: new FormControl(null),
-    //   turnsTaken: new FormControl(null)
-    // });
   }
 
   private addCheckboxes() {
     this.availableParticipants.forEach((o, i) => {
-      const control = new FormControl(i === 0); // if first item set to true, else false
+      const control = new FormControl();
       (this.form.controls.participants as FormArray).push(control);
     });
   }
@@ -68,7 +56,6 @@ export class CreatePage implements OnInit {
       .filter(v => v !== null);
     console.log(selectedParticipantIds);
 
-    
     const newTurnTaker = new TurnTaker(
       Math.floor(Math.random() * 9999).toString(),
       this.form.value.name,

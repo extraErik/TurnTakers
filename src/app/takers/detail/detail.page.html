@@ -9,10 +9,27 @@
 
 <ion-content>
 
-  <div padding>
+  <ion-grid>
+    <ion-row>
+      <ion-col size-xs="10">
+        <p>{{ turnTaker.description }}</p>
+      </ion-col>
+      <ion-col size-xs="2" text-end>
+        <!-- if I end up needing to create my own icon: https://www.joshmorony.com/custom-svg-icons-in-ionic-with-ionicons/ -->
+        <ion-button size="small" (click)="displayParticipants($event)">
+            <ion-icon name="settings"></ion-icon>
+        </ion-button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <!-- <div padding>
     <p>{{ turnTaker.description }}</p>
     <p>Participants: {{ participantNames }}</p>
-  </div>
+    <ion-avatar (click)="displayParticipants($event)">
+      <ion-icon name="people"></ion-icon>
+    </ion-avatar>
+  </div> -->
 
   <ion-card>
       <ion-card-header>
@@ -20,6 +37,14 @@
         <ion-card-subtitle>Turn {{ turnTaker.turnsTaken.length + 1 }}</ion-card-subtitle>
       </ion-card-header>
       <ion-card-content>
+        <ion-grid class="ion-padding-bottom">
+          <ion-row>
+            <ion-item>
+              <ion-label position="floating">Note (optional)</ion-label>
+              <ion-input type="text" [(ngModel)]="turnNote" ></ion-input>
+            </ion-item>
+          </ion-row>
+        </ion-grid>
         <ion-button color="primary" (click)="onTakeTurn()">Take Turn</ion-button>
         <ion-button color="primary" fill="clear" (click)="onSkipTurn()">Skip Turn</ion-button>
       </ion-card-content>
@@ -52,9 +77,9 @@
         <ion-img [src]=""></ion-img>
       </ion-thumbnail> -->
       <ion-label>
-        <p>Turn {{ turnTaker.turnsTaken.length - i}}: {{ getParticipantName(turn.participantId) }} <span *ngIf="turn.skipped">- SKIPPED</span></p>
+        <p>Turn {{ turnTaker.turnsTaken.length - i}}: {{ getParticipantName(turn.participantId) }} <span color="warning" *ngIf="turn.skipped">- SKIPPED</span></p>
         <p>{{ turn.dateTime | date:'short' }}</p>
-        <p>{{ turn.note}}</p>
+        <p *ngIf="turn.note">Note: {{ turn.note }}</p>
       </ion-label>
     </ion-item>
   </ion-virtual-scroll>

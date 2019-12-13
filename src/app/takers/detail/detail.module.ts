@@ -7,6 +7,7 @@ import { IonicModule } from '@ionic/angular';
 import { DetailPageRoutingModule } from './detail-routing.module';
 
 import { DetailPage } from './detail.page';
+import { ParticipantDisplayComponent } from 'src/app/popovers/participant-display/participant-display.component';
 
 @NgModule({
   imports: [
@@ -15,6 +16,7 @@ import { DetailPage } from './detail.page';
     IonicModule,
     DetailPageRoutingModule
   ],
-  declarations: [DetailPage]
+  declarations: [DetailPage, ParticipantDisplayComponent],
+  entryComponents: [ParticipantDisplayComponent]
 })
 export class DetailPageModule {}

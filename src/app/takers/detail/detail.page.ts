@@ -1,11 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { NavController } from '@ionic/angular';
+import { NavController, PopoverController } from '@ionic/angular';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MyTurnTakersService } from 'src/app/services/my-turn-takers.service';
 import { TurnTaker } from '../turnTaker.model';
 import { ParticipantsService } from 'src/app/services/participants.service';
 import { Participant } from '../participant.model';
 import { Turn } from '../turn.model';
+import { ParticipantDisplayComponent } from 'src/app/popovers/participant-display/participant-display.component';
 
 @Component({
   selector: 'app-detail',
@@ -18,6 +19,7 @@ export class DetailPage implements OnInit {
   turnTaker: TurnTaker;
   participantNames: string[];
   numTurnsTaken = 0;
+  turnNote: string = null;
   turnHistory: Array<Turn>; // this will just be turns array from turnTaker, in reverse order
 
   constructor(
@@ -25,7 +27,8 @@ export class DetailPage implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private myTurnTakers: MyTurnTakersService,
-    private participantsService: ParticipantsService
+    private participantsService: ParticipantsService,
+    public popoverController: PopoverController
   ) { }
 
   ngOnInit() {
@@ -43,6 +46,16 @@ export class DetailPage implements OnInit {
       this.turnHistory = this.turnTaker.turnsTaken.reverse();
       this.numTurnsTaken = this.turnTaker.turnsTaken.length;
     });
+  }
+
+  async displayParticipants(ev: any) {
+    const popover = await this.popoverController.create({
+      component: ParticipantDisplayComponent,
+      event: ev,
+      translucent: false,
+      componentProps: { participants: this.participantNames },
+    });
+    return await popover.present();
   }
 
   getParticipantName(participantId) {
@@ -95,24 +108,28 @@ export class DetailPage implements OnInit {
   }
 
   onTakeTurn() {
-    const newTurn = new Turn(new Date(), this.getNextTurnParticipant().id, null, false);
+    const newTurn = new Turn(new Date(), this.getNextTurnParticipant().id, this.turnNote, false);
 
     this.turnTaker.turnsTaken.unshift(newTurn);
     this.turnTaker.turnsTaken = [...this.turnTaker.turnsTaken]; // to force change detection
 
     this.myTurnTakers.updateTurnTaker(this.turnTaker);
+
+    this.turnNote = null;
     console.log(this.turnTaker);
   }
 
   // TODO: make this more DRY
   onSkipTurn() {
 
-    const newTurn = new Turn(new Date(), this.getNextTurnParticipant().id, null, true);
+    const newTurn = new Turn(new Date(), this.getNextTurnParticipant().id, this.turnNote, true);
 
     this.turnTaker.turnsTaken.unshift(newTurn);
     this.turnTaker.turnsTaken = [...this.turnTaker.turnsTaken]; // to force change detection
 
     this.myTurnTakers.updateTurnTaker(this.turnTaker);
+
+    this.turnNote = null;
     console.log(this.turnTaker);
   }
 }

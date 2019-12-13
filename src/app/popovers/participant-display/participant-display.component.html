@@ -1,0 +1,9 @@
+<div class="ion-padding">
+  <p>Participants</p>
+  <ion-list>
+    <ion-item *ngFor="let participant of participants">
+      {{ participant }}
+    </ion-item>
+  </ion-list>
+  <ion-button expand="block" (click)="dismissPopover()">Okay</ion-button>
+</div>

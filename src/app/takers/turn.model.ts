@@ -4,6 +4,7 @@ export class Turn {
     constructor(
       public dateTime: Date,
       public participantId: string,
-      public note: string
+      public note: string,
+      public skipped: boolean
     ) {}
   }

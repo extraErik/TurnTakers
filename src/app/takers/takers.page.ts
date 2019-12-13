@@ -28,8 +28,8 @@ export class TakersPage implements OnInit {
       'This is the first TurnTaker',
       ['aaa', 'bbb'], // participant IDs
       [
-        new Turn(new Date(), 'aaa', null),
-        new Turn(new Date(), 'bbb', null)
+        new Turn(new Date(), 'aaa', null, false),
+        new Turn(new Date(), 'bbb', null, false)
       ]
     );
     const dummyTurnTaker2 = new TurnTaker(
@@ -38,9 +38,9 @@ export class TakersPage implements OnInit {
       'This is the second TurnTaker',
       ['ccc','ddd','eee'], // participant IDs
       [
-        new Turn(new Date(), 'ccc', null),
-        new Turn(new Date(), 'ddd', null),
-        new Turn(new Date(), 'eee', null)
+        new Turn(new Date(), 'ccc', null, false),
+        new Turn(new Date(), 'ddd', null, false),
+        new Turn(new Date(), 'eee', null, false)
       ]
     );
     const dummyTurnTaker3 = new TurnTaker(
@@ -49,8 +49,8 @@ export class TakersPage implements OnInit {
       'This is the third TurnTaker',
       ['fff','ggg'], // participant IDs
       [
-        new Turn(new Date(), 'fff', null),
-        new Turn(new Date(), 'ggg', null)
+        new Turn(new Date(), 'fff', null, false),
+        new Turn(new Date(), 'ggg', null, false)
       ]
     );
 

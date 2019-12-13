@@ -52,12 +52,15 @@
         <ion-img [src]=""></ion-img>
       </ion-thumbnail> -->
       <ion-label>
-        <p>Turn {{ turnTaker.turnsTaken.length - i}}: {{ getParticipantName(turn.participantId) }}</p>
+        <p>Turn {{ turnTaker.turnsTaken.length - i}}: {{ getParticipantName(turn.participantId) }} <span *ngIf="turn.skipped">- SKIPPED</span></p>
         <p>{{ turn.dateTime | date:'short' }}</p>
         <p>{{ turn.note}}</p>
       </ion-label>
     </ion-item>
   </ion-virtual-scroll>
+  <div *ngIf="!turnTaker.turnsTaken || turnTaker.turnsTaken.length <= 0" class="ion-padding-start">
+    No turns taken yet
+  </div>
 
   
 </ion-content>

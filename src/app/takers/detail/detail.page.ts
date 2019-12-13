@@ -51,6 +51,9 @@ export class DetailPage implements OnInit {
 
   // TODO: should this be moved to the participantService?
   getLastTurnParticipant() {
+    if (!this.turnTaker.turnsTaken || this.turnTaker.turnsTaken.length <= 0) {
+      return {id: -1, name: 'N/A'};
+    }
     const lastTurnTaken = this.turnTaker.turnsTaken.slice(-1)[0];
     const lastParticipantId = lastTurnTaken.participantId;
     return this.availableParticipants.find(participant => participant.id === lastParticipantId);
@@ -58,39 +61,58 @@ export class DetailPage implements OnInit {
 
   // TODO: should this be moved to the participantService?
   getNextTurnParticipant() {
-    const lastTurnTaken = this.turnTaker.turnsTaken.slice(-1)[0];
-    const lastParticipantIndex = this.turnTaker.participants.findIndex(item => item === lastTurnTaken.participantId);
-    const nextParticipantIndex = (lastParticipantIndex === this.turnTaker.participants.length - 1) ? 0 : lastParticipantIndex + 1;
+    let lastTurnTaken: Turn;
+    let lastParticipantIndex: number;
+    let nextParticipantIndex: number;
+    if (this.turnTaker.turnsTaken && this.turnTaker.turnsTaken.length > 0) {
+      lastTurnTaken = this.turnTaker.turnsTaken.slice(0)[0];
+      lastParticipantIndex = this.turnTaker.participants.findIndex(item => item === lastTurnTaken.participantId);
+      nextParticipantIndex = (lastParticipantIndex === this.turnTaker.participants.length - 1) ? 0 : lastParticipantIndex + 1;
+    } else {
+      nextParticipantIndex = 0;
+    }
     const nextParticipantId = this.turnTaker.participants[nextParticipantIndex];
     return this.availableParticipants.find(participant => participant.id === nextParticipantId);
   }
 
   // TODO: should this be moved to the participantService?
   getTurnAfterNextTurnParticipant() {
-    const lastTurnTaken = this.turnTaker.turnsTaken.slice(-1)[0];
-    const lastParticipantIndex = this.turnTaker.participants.findIndex(item => item === lastTurnTaken.participantId);
-
-    const nextParticipantIndex = (lastParticipantIndex === this.turnTaker.participants.length - 1) ? 0 : lastParticipantIndex + 1;
-
-    //TODO: surely this could be done more elegantly
-    const nextNextParticipantIndex = (nextParticipantIndex === this.turnTaker.participants.length - 1) ? 0 : nextParticipantIndex + 1;
-
+    let lastTurnTaken: Turn;
+    let lastParticipantIndex: number;
+    let nextParticipantIndex: number;
+    let nextNextParticipantIndex: number;
+    if (this.turnTaker.turnsTaken && this.turnTaker.turnsTaken.length > 0) {
+      lastTurnTaken = this.turnTaker.turnsTaken.slice(0)[0];
+      lastParticipantIndex = this.turnTaker.participants.findIndex(item => item === lastTurnTaken.participantId);
+      nextParticipantIndex = (lastParticipantIndex === this.turnTaker.participants.length - 1) ? 0 : lastParticipantIndex + 1;
+      //TODO: surely this could be done more elegantly
+      nextNextParticipantIndex = (nextParticipantIndex === this.turnTaker.participants.length - 1) ? 0 : nextParticipantIndex + 1;
+    } else {
+      nextNextParticipantIndex = (this.turnTaker.participants.length > 1) ? 1 : 0;
+    }
     const nextNextParticipantId = this.turnTaker.participants[nextNextParticipantIndex];
-
     return this.availableParticipants.find(participant => participant.id === nextNextParticipantId);
   }
 
   onTakeTurn() {
-    const newTurn = new Turn(new Date(), this.getNextTurnParticipant().id, null);
+    const newTurn = new Turn(new Date(), this.getNextTurnParticipant().id, null, false);
 
-    this.turnTaker.turnsTaken.push(newTurn);
+    this.turnTaker.turnsTaken.unshift(newTurn);
     this.turnTaker.turnsTaken = [...this.turnTaker.turnsTaken]; // to force change detection
 
     this.myTurnTakers.updateTurnTaker(this.turnTaker);
     console.log(this.turnTaker);
   }
 
+  // TODO: make this more DRY
   onSkipTurn() {
-    alert('TODO: skip turn');
+
+    const newTurn = new Turn(new Date(), this.getNextTurnParticipant().id, null, true);
+
+    this.turnTaker.turnsTaken.unshift(newTurn);
+    this.turnTaker.turnsTaken = [...this.turnTaker.turnsTaken]; // to force change detection
+
+    this.myTurnTakers.updateTurnTaker(this.turnTaker);
+    console.log(this.turnTaker);
   }
 }

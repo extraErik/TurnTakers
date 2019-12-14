@@ -15,6 +15,8 @@ export class CreatePage implements OnInit {
 
   form: FormGroup;
   availableParticipants: Array<Participant>;
+  selectedParticipantList: Array<string> = [];
+  participantListForDisplay = '';
 
   constructor(
     private formBuilder: FormBuilder,
@@ -24,7 +26,6 @@ export class CreatePage implements OnInit {
   ) {
 
     this.availableParticipants = this.participantsService.getAllParticipants();
-    console.log(this.availableParticipants);
 
     this.form = this.formBuilder.group({
       name: '',
@@ -32,8 +33,6 @@ export class CreatePage implements OnInit {
       participants: new FormArray([]),
       // turnsTakern: []
     });
-    console.log('form as seen right after formbuilder creation:');
-    console.log(this.form);
     this.addCheckboxes();
   }
 
@@ -47,20 +46,46 @@ export class CreatePage implements OnInit {
     });
   }
 
+  participantClicked(event: any, availableParticipantIndex: any) {
+    const availableParticipantName = this.availableParticipants[availableParticipantIndex].name;
+    if (this.form.controls.participants.value[availableParticipantIndex] !== true) {
+      // TODO: in line above: !== true meaning it's about to change to true...is there a better way here?
+      this.selectedParticipantList.push(availableParticipantName);
+    } else {
+      if (this.selectedParticipantList) {
+        this.selectedParticipantList = this.selectedParticipantList.filter(item => {
+          return item !== availableParticipantName;
+        });
+      }
+    }
+    console.log('new selectedParticipantList: ' + this.selectedParticipantList);
+    this.participantListForDisplay = this.selectedParticipantList.join(' \u2192 '); // joined by right arrow
+  }
+
   onCreate() {
 
     console.log(this.form);
 
-    const selectedParticipantIds = this.form.value.participants
-      .map((v, i) => v ? this.availableParticipants[i].id : null)
-      .filter(v => v !== null);
-    console.log(selectedParticipantIds);
+    // const selectedParticipantIds = this.form.value.participants
+    //   .map((v, i) => v ? this.availableParticipants[i].id : null)
+    //   .filter(v => v !== null);
+    // console.log(selectedParticipantIds);
 
     const newTurnTaker = new TurnTaker(
       Math.floor(Math.random() * 9999).toString(),
       this.form.value.name,
       this.form.value.description,
-      selectedParticipantIds,
+
+      // selectedParticipantIds,
+      this.selectedParticipantList.map(
+        (selectedName, index) => {
+          return this.availableParticipants.find(
+            item => {
+              return item.name === selectedName;
+          }).id;
+        }
+      ),
+
       []   // turns taken
     );
     this.myTurnTakers.addTurnTaker(newTurnTaker);

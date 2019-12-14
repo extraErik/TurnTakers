@@ -63,9 +63,7 @@ export class TakersPage implements OnInit {
   }
 
   ionViewWillEnter() {
-    console.log('ionViewWillEnter');
     this.items = [...this.myTurnTakers.getMyTurnTakers()]; // spread to force change detection
-    console.log(this.items);
   }
 
   createDummyParticipants() {

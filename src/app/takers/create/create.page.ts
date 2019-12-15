@@ -28,7 +28,7 @@ export class CreatePage implements OnInit {
     this.availableParticipants = this.participantsService.getAllParticipants();
 
     this.form = this.formBuilder.group({
-      name: '',
+      name: ['', Validators.required],
       description: '',
       participants: new FormArray([]),
       // turnsTakern: []
@@ -44,6 +44,10 @@ export class CreatePage implements OnInit {
       const control = new FormControl();
       (this.form.controls.participants as FormArray).push(control);
     });
+  }
+
+  onCheckboxBlur() {
+    console.log('checkbox blur');
   }
 
   participantClicked(event: any, availableParticipantIndex: any) {

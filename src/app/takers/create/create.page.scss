@@ -1,0 +1,8 @@
+.errormsg {
+    color: red;
+    padding-left: 16px;
+}
+
+ion-item.error .item-native .item-inner {
+    border-bottom: 1px solid red;
+}

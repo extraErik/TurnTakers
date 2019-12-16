@@ -3,12 +3,12 @@
       <ion-buttons slot="start">
         <ion-back-button defaultHref="/takers"></ion-back-button>
       </ion-buttons>
-      <ion-title>Create New TurnTaker</ion-title>
+      <ion-title>Edit TurnTaker</ion-title> <!-- TODO: put turntaker name here -->
     </ion-toolbar>
   </ion-header>
 
 <ion-content>
 
-   <app-create-edit-turn-taker></app-create-edit-turn-taker>
+   <app-create-edit-turn-taker [editTaker]="turnTaker"></app-create-edit-turn-taker>
 
 </ion-content>

@@ -2,8 +2,8 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
-import { CreatePageRoutingModule } from './create-routing.module';
-import { CreatePage } from './create.page';
+import { EditPageRoutingModule } from './edit-routing.module';
+import { EditPage } from './edit.page';
 import { SharedModule } from '../shared/shared.module';
 
 @NgModule({
@@ -12,8 +12,8 @@ import { SharedModule } from '../shared/shared.module';
     ReactiveFormsModule,
     IonicModule,
     SharedModule,
-    CreatePageRoutingModule
+    EditPageRoutingModule
   ],
-  declarations: [CreatePage]
+  declarations: [EditPage]
 })
-export class CreatePageModule {}
+export class EditPageModule {}

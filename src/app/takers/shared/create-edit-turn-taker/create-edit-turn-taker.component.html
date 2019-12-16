@@ -1,0 +1,59 @@
+<form [formGroup]="form" (ngSubmit)="onCreate()"> 
+    <ion-grid>
+      <ion-row>
+        <ion-col size-sm="6" offset-sm="3">
+          <ion-item [ngClass]="{'error': !form.get('name').valid && form.get('name').touched}">
+            <ion-label position="floating">Name<sup style="color: red">*</sup></ion-label>
+            <ion-input type="text" autocomplete autocorrect formControlName="name"></ion-input>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+      <ion-row *ngIf="!form.get('name').valid && form.get('name').touched">
+          <ion-col size-sm="6" offset-sm="3">
+            <div class="errormsg">
+                Name must be between 1 and 30 characters
+            </div>
+          </ion-col>
+      </ion-row>
+      <ion-row>
+          <ion-col size-sm="6" offset-sm="3">
+              <ion-item>
+                <ion-label position="floating">Description</ion-label>
+                <ion-textarea rows="3" formControlName="description"></ion-textarea>
+              </ion-item>
+            </ion-col>
+      </ion-row>
+      <ion-row *ngIf="!form.get('description').valid && form.get('description').touched">
+        <ion-col size-sm="6" offset-sm="3">
+            <div class="errormsg">
+              Description must be between 1 and 300 characters
+            </div>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col size-sm="6" offset-sm="3" class="ion-padding">
+          <p>Select participants<span style="color: red">*</span></p>
+          <ion-list>
+            <ion-item formArrayName="participants"  *ngFor="let participant of form.controls.participants.controls; let i = index">
+              <ion-label>{{availableParticipants[i].name}}</ion-label>
+              <ion-checkbox slot="end" [formControlName]="i" (click)="participantClicked($event, i)" (blur)="onCheckboxBlur()"></ion-checkbox>
+            </ion-item>
+          </ion-list>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col class="ion-padding">
+            Selected participants: <br />
+            {{ participantListForDisplay || "None" }}
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col size-sm="6" offset-sm="3" class="ion-padding-bottom">
+          <ion-button type="button" color="primary" fill="clear" expand="block" [routerLink]="['/takers']" routerDirection="back">Cancel</ion-button>
+          <ion-button type="submit" color="primary" expand="block" [disabled]="form.invalid || !selectedParticipantList || selectedParticipantList.length <= 0">
+            Create
+          </ion-button>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </form>

@@ -19,17 +19,12 @@
         <ion-button size="small" (click)="displayParticipants($event)">
             <ion-icon name="people"></ion-icon>
         </ion-button>
+        <ion-button size="small" [routerLink]="['/takers/edit', turnTaker.id]">
+            <ion-icon name="settings"></ion-icon>
+        </ion-button>
       </ion-col>
     </ion-row>
   </ion-grid>
-
-  <!-- <div padding>
-    <p>{{ turnTaker.description }}</p>
-    <p>Participants: {{ participantNames }}</p>
-    <ion-avatar (click)="displayParticipants($event)">
-      <ion-icon name="people"></ion-icon>
-    </ion-avatar>
-  </div> -->
 
   <ion-card>
       <ion-card-header>
@@ -49,11 +44,6 @@
         <ion-button color="primary" fill="clear" (click)="onSkipTurn()">Skip Turn</ion-button>
       </ion-card-content>
   </ion-card>
-
-  <!-- <div class="ion-padding-start">
-    <p class="ion-float-left">Previously: {{ getLastTurnParticipant().name }}</p>
-    <p class="ion-float-right">After this: {{ getTurnAfterNextTurnParticipant().name }}</p>
-  </div> -->
 
   <ion-grid>
     <ion-row>
@@ -87,5 +77,4 @@
     No turns taken yet
   </div>
 
-  
 </ion-content>

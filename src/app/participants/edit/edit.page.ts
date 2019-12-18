@@ -1,6 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { ParticipantsService } from 'src/app/services/participants.service';
-import { Participant } from 'src/app/takers/participant.model';
 
 @Component({
   selector: 'app-edit',
@@ -9,18 +7,9 @@ import { Participant } from 'src/app/takers/participant.model';
 })
 export class EditPage implements OnInit {
 
-  availableParticipants: Participant[];
-
-  constructor(
-    private participantsService: ParticipantsService
-  ) { }
+  constructor() { }
 
   ngOnInit() {
-    this.availableParticipants = this.participantsService.getAllParticipants();
-  }
-
-  newParticipant() {
-    console.log('TODO: create a way to add new participant');
   }
 
 }

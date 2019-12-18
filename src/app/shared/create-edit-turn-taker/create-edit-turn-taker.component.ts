@@ -1,10 +1,10 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormArray, FormControl } from '@angular/forms';
-import { Participant } from '../../participant.model';
+import { Participant } from '../../takers/participant.model';
 import { MyTurnTakersService } from 'src/app/services/my-turn-takers.service';
 import { Router } from '@angular/router';
 import { ParticipantsService } from 'src/app/services/participants.service';
-import { TurnTaker } from '../../turnTaker.model';
+import { TurnTaker } from '../../takers/turnTaker.model';
 import { NavController } from '@ionic/angular';
 
 @Component({

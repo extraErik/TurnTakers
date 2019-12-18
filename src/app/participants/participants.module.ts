@@ -1,19 +1,20 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+
 import { IonicModule } from '@ionic/angular';
-import { EditPageRoutingModule } from './edit-routing.module';
-import { EditPage } from './edit.page';
-import { SharedModule } from 'src/app/shared/shared.module';
+
+import { ParticipantsPageRoutingModule } from './participants-routing.module';
+
+import { ParticipantsPage } from './participants.page';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    SharedModule,
-    EditPageRoutingModule
+    ParticipantsPageRoutingModule
   ],
-  declarations: [EditPage]
+  declarations: [ParticipantsPage]
 })
-export class EditPageModule {}
+export class ParticipantsPageModule {}

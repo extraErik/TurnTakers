@@ -8,8 +8,8 @@ const routes: Routes = [
     loadChildren: () => import('./takers/takers.module').then( m => m.TakersPageModule)
   },
   {
-    path: 'participants/edit',
-    loadChildren: () => import('./participants/edit/edit.module').then( m => m.EditPageModule)
+    path: 'participants',
+    loadChildren: () => import('./participants/participants.module').then( m => m.ParticipantsPageModule)
   },
 ];
 

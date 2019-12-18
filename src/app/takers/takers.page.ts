@@ -14,12 +14,17 @@ export class TakersPage implements OnInit {
 
   items: Array<TurnTaker> = [];
   availableParticipants: Array<Participant> = [];
+  availableParticipantNamesForDisplay: string;
 
   constructor(private myTurnTakers: MyTurnTakersService, private myParticipants: ParticipantsService) { }
 
   ngOnInit() {
 
     this.availableParticipants = this.createDummyParticipants();
+    this.availableParticipantNamesForDisplay = this.availableParticipants.map(participant => {
+      return participant.name;
+    }).join(', ');
+
     this.myParticipants.setParticipants(this.availableParticipants);
 
     const dummyTurnTaker1 = new TurnTaker(

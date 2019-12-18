@@ -5,17 +5,48 @@
 </ion-header>
 
 <ion-content>
-  <ion-virtual-scroll [items]="items" approxItemHeight="320px">
-    <ion-item *virtualItem="let item" [routerLink]="['/takers/detail', item.id]" detail>
-      <ion-label>
-        <h2>{{ item.name }}</h2>
-        <p>{{ item.description }}</p>
-      </ion-label>
-    </ion-item>
-  </ion-virtual-scroll>
 
-  <div class="ion-padding">
-    <ion-button color="primary" [routerLink]="['/takers/create']" expand="block">New TurnTaker</ion-button>
-  </div>
-  
+  <ion-grid>
+
+    <ion-row>
+      <ion-col>
+        <h3>My TurnTakers</h3>
+        <ion-virtual-scroll [items]="items" approxItemHeight="320px">
+          <ion-item *virtualItem="let item" [routerLink]="['/takers/detail', item.id]" detail>
+            <ion-label>
+              <h2>{{ item.name }}</h2>
+              <p>{{ item.description }}</p>
+            </ion-label>
+          </ion-item>
+        </ion-virtual-scroll>
+      </ion-col>
+    </ion-row>
+
+    <ion-row>
+      <ion-col>
+        <div class="ion-padding">
+          <ion-button color="primary" [routerLink]="['/takers/create']" expand="block">New TurnTaker</ion-button>
+        </div>
+      </ion-col>
+    </ion-row>
+
+    <ion-row>
+      <ion-col size-xs="9">
+        <h3>Available Participants</h3>
+      </ion-col>
+      <ion-col size-xs="3" class="ion-padding-top ion-text-end">
+        <ion-button [routerLink]="['/participants', 'edit']" size="small">
+          <ion-icon name="settings"></ion-icon>
+          <ion-label>Edit</ion-label>
+        </ion-button>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+        {{ availableParticipantNamesForDisplay }}
+      </ion-col>
+    </ion-row>
+
+  </ion-grid>
+
 </ion-content>

@@ -11,25 +11,31 @@
 
   <ion-grid>
     <ion-row>
-      <ion-col size-xs="10">
+      <ion-col size-xs="10" class="ion-padding-start">
         <p>{{ turnTaker.description }}</p>
       </ion-col>
-      <ion-col size-xs="2" text-end>
+      <ion-col size-xs="2" class="ion-text-end">
         <!-- if I end up needing to create my own icon: https://www.joshmorony.com/custom-svg-icons-in-ionic-with-ionicons/ -->
-        <ion-button size="small" (click)="displayParticipants($event)">
+        <!-- <ion-button size="small" (click)="displayParticipants($event)">
             <ion-icon name="people"></ion-icon>
-        </ion-button>
+        </ion-button> -->
         <ion-button size="small" [routerLink]="['/takers/edit', turnTaker.id]">
             <ion-icon name="settings"></ion-icon>
         </ion-button>
       </ion-col>
     </ion-row>
+    <ion-row>
+      <ion-col class="ion-padding-start">
+          Participants: {{ participantListForDisplay }}
+      </ion-col>
+    </ion-row>
   </ion-grid>
+
 
   <ion-card>
       <ion-card-header>
         <ion-card-title>Next: {{ getNextTurnParticipant().name }}</ion-card-title>
-        <ion-card-subtitle>Turn {{ turnTaker.turnsTaken.length + 1 }}</ion-card-subtitle>
+        <ion-card-subtitle>Turn {{ turnHistory.length + 1 }}</ion-card-subtitle>
       </ion-card-header>
       <ion-card-content>
         <ion-grid class="ion-padding-bottom">
@@ -61,19 +67,19 @@
   <!-- And maybe this: https://www.freakyjolly.com/ionic-4-multiple-slides-on-single-view-using-swiper-slider/ -->
 
   <h3 class="ion-padding-top ion-padding-start">Turn history</h3>
-  <ion-virtual-scroll [items]="turnTaker.turnsTaken" approxItemHeight="70px">
+  <ion-virtual-scroll [items]="turnHistory" approxItemHeight="70px">
     <ion-item *virtualItem="let turn; let i = index">
       <!-- <ion-thumbnail slot="start">
         <ion-img [src]=""></ion-img>
       </ion-thumbnail> -->
       <ion-label>
-        <p>Turn {{ turnTaker.turnsTaken.length - i}}: {{ getParticipantName(turn.participantId) }} <span color="warning" *ngIf="turn.skipped">- SKIPPED</span></p>
+        <p>Turn {{ turnHistory.length - i}}: {{ getParticipantName(turn.participantId) }} ({{turn.participantId}}) <span color="warning" *ngIf="turn.skipped">- SKIPPED</span></p>
         <p>{{ turn.dateTime | date:'short' }}</p>
         <p *ngIf="turn.note">Note: {{ turn.note }}</p>
       </ion-label>
     </ion-item>
   </ion-virtual-scroll>
-  <div *ngIf="!turnTaker.turnsTaken || turnTaker.turnsTaken.length <= 0" class="ion-padding-start">
+  <div *ngIf="!turnHistory || turnHistory.length <= 0" class="ion-padding-start">
     No turns taken yet
   </div>
 

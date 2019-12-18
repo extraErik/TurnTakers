@@ -1,4 +1,4 @@
-<form [formGroup]="form" (ngSubmit)="onCreate()"> 
+<form [formGroup]="form" (ngSubmit)="onSubmit()"> 
     <ion-grid>
       <ion-row>
         <ion-col size-sm="6" offset-sm="3">
@@ -36,7 +36,7 @@
           <ion-list>
             <ion-item formArrayName="participants"  *ngFor="let participant of form.controls.participants.controls; let i = index">
               <ion-label>{{availableParticipants[i].name}}</ion-label>
-              <ion-checkbox slot="end" [formControlName]="i" (click)="participantClicked($event, i)" (blur)="onCheckboxBlur()"></ion-checkbox>
+              <ion-checkbox slot="end" [formControlName]="i" (click)="participantClicked($event, i)"></ion-checkbox>
             </ion-item>
           </ion-list>
         </ion-col>
@@ -50,9 +50,11 @@
       <ion-row>
         <ion-col size-sm="6" offset-sm="3" class="ion-padding-bottom">
           <ion-button type="button" color="primary" fill="clear" expand="block" [routerLink]="['/takers']" routerDirection="back">Cancel</ion-button>
+          
           <ion-button type="submit" color="primary" expand="block" [disabled]="form.invalid || !selectedParticipantList || selectedParticipantList.length <= 0">
-            Create
+            {{ editTaker ? 'Update' : 'Create' }}
           </ion-button>
+
         </ion-col>
       </ion-row>
     </ion-grid>

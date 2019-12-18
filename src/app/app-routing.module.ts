@@ -7,6 +7,10 @@ const routes: Routes = [
     path: 'takers',
     loadChildren: () => import('./takers/takers.module').then( m => m.TakersPageModule)
   },
+  {
+    path: 'participants/edit',
+    loadChildren: () => import('./participants/edit/edit.module').then( m => m.EditPageModule)
+  },
 ];
 
 @NgModule({

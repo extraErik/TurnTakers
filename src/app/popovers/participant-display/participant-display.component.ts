@@ -8,6 +8,13 @@ import { NavParams, PopoverController } from '@ionic/angular';
 })
 export class ParticipantDisplayComponent implements OnInit {
 
+  //
+  //
+  // TODO: eliminate this component if determined it is not needed
+  // (but keep for a while as example of how to implement popover)
+  //
+  //
+
   participants: any;
 
   constructor(private navParams: NavParams, private popoverController: PopoverController) { }

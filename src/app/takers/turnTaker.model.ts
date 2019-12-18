@@ -6,7 +6,7 @@ export class TurnTaker {
       public id: string,
       public name: string,
       public description: string,
-      public participants: string[] = [], // order of array indicates order of turns
+      public participants: string[] = [], // particiapnt ids, order of array indicates order of turns
       public turnsTaken: Array<Turn> = []
     ) {}
   }

@@ -6,7 +6,7 @@ import { TurnTaker } from '../turnTaker.model';
 import { ParticipantsService } from 'src/app/services/participants.service';
 import { Participant } from '../participant.model';
 import { Turn } from '../turn.model';
-import { ParticipantDisplayComponent } from 'src/app/popovers/participant-display/participant-display.component';
+//import { ParticipantDisplayComponent } from 'src/app/popovers/participant-display/participant-display.component';
 
 @Component({
   selector: 'app-detail',
@@ -18,6 +18,7 @@ export class DetailPage implements OnInit {
   availableParticipants: Participant[];
   turnTaker: TurnTaker;
   participantNames: string[];
+  participantListForDisplay = '';
   numTurnsTaken = 0;
   turnNote: string = null;
   turnHistory: Array<Turn>; // this will just be turns array from turnTaker, in reverse order
@@ -43,20 +44,21 @@ export class DetailPage implements OnInit {
       const takerId = paramMap.get('id');
       this.turnTaker = this.myTurnTakers.getMyTurnTaker(takerId);
       this.participantNames = this.participantsService.getParticipantNames(this.turnTaker.participants);
-      this.turnHistory = this.turnTaker.turnsTaken.reverse();
+      this.participantListForDisplay = this.participantNames.join(' \u2192 '); // joined by right arrow
+      this.turnHistory = [...this.turnTaker.turnsTaken].reverse();
       this.numTurnsTaken = this.turnTaker.turnsTaken.length;
     });
   }
 
-  async displayParticipants(ev: any) {
-    const popover = await this.popoverController.create({
-      component: ParticipantDisplayComponent,
-      event: ev,
-      translucent: false,
-      componentProps: { participants: this.participantNames },
-    });
-    return await popover.present();
-  }
+  // async displayParticipants(ev: any) {
+  //   const popover = await this.popoverController.create({
+  //     component: ParticipantDisplayComponent,
+  //     event: ev,
+  //     translucent: false,
+  //     componentProps: { participants: this.participantNames },
+  //   });
+  //   return await popover.present();
+  // }
 
   getParticipantName(participantId) {
     return this.participantsService.getParticipantName(participantId);
@@ -78,7 +80,7 @@ export class DetailPage implements OnInit {
     let lastParticipantIndex: number;
     let nextParticipantIndex: number;
     if (this.turnTaker.turnsTaken && this.turnTaker.turnsTaken.length > 0) {
-      lastTurnTaken = this.turnTaker.turnsTaken.slice(0)[0];
+      lastTurnTaken = this.turnTaker.turnsTaken.slice(-1)[0];
       lastParticipantIndex = this.turnTaker.participants.findIndex(item => item === lastTurnTaken.participantId);
       nextParticipantIndex = (lastParticipantIndex === this.turnTaker.participants.length - 1) ? 0 : lastParticipantIndex + 1;
     } else {
@@ -95,7 +97,7 @@ export class DetailPage implements OnInit {
     let nextParticipantIndex: number;
     let nextNextParticipantIndex: number;
     if (this.turnTaker.turnsTaken && this.turnTaker.turnsTaken.length > 0) {
-      lastTurnTaken = this.turnTaker.turnsTaken.slice(0)[0];
+      lastTurnTaken = this.turnTaker.turnsTaken.slice(-1)[0];
       lastParticipantIndex = this.turnTaker.participants.findIndex(item => item === lastTurnTaken.participantId);
       nextParticipantIndex = (lastParticipantIndex === this.turnTaker.participants.length - 1) ? 0 : lastParticipantIndex + 1;
       //TODO: surely this could be done more elegantly
@@ -110,8 +112,10 @@ export class DetailPage implements OnInit {
   onTakeTurn() {
     const newTurn = new Turn(new Date(), this.getNextTurnParticipant().id, this.turnNote, false);
 
-    this.turnTaker.turnsTaken.unshift(newTurn);
+    this.turnTaker.turnsTaken.push(newTurn);
     this.turnTaker.turnsTaken = [...this.turnTaker.turnsTaken]; // to force change detection
+
+    this.turnHistory = [...this.turnTaker.turnsTaken].reverse();
 
     this.myTurnTakers.updateTurnTaker(this.turnTaker);
 
@@ -124,8 +128,10 @@ export class DetailPage implements OnInit {
 
     const newTurn = new Turn(new Date(), this.getNextTurnParticipant().id, this.turnNote, true);
 
-    this.turnTaker.turnsTaken.unshift(newTurn);
+    this.turnTaker.turnsTaken.push(newTurn);
     this.turnTaker.turnsTaken = [...this.turnTaker.turnsTaken]; // to force change detection
+
+    this.turnHistory = [...this.turnTaker.turnsTaken].reverse();
 
     this.myTurnTakers.updateTurnTaker(this.turnTaker);
 
